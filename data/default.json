@@ -96,16 +96,14 @@
   ["Karlson", "/m/web2/karlson/", "https://raw.githubusercontent.com/sigmiliarity/webC/refs/heads/main/542.png"],
   
   
-  ["Temple Run 2", "/m/a2/semag/templerun2/", "https://raw.githubusercontent.com/sigmiliarity/a2/refs/heads/main/semag/templerun2/img/icons/icon-128x128.png"],
-  ["Funny Shooter 2", "/m/a2/semag/funnyshooter2/", "https://raw.githubusercontent.com/sigmiliarity/a2/refs/heads/main/semag/funnyshooter2/894abba63a6b23fed823f404831f444f.jpeg"],
-  ["Getaway Shootout", "/m/a2/semag/getawayshooter/", "https://raw.githubusercontent.com/sigmiliarity/a2/refs/heads/main/semag/getawayshooter/Untitled.jpeg"],
+  
   
   ["Superhot", "/m/a2/semag/superhot/", "https://raw.githubusercontent.com/sigmiliarity/a2/refs/heads/main/semag/superhot/icon.png"],
   ["Retro Bowl", "/m/a2/semag/retrobowl/", "https://raw.githubusercontent.com/sigmiliarity/a2/refs/heads/main/semag/retrobowl/img/icon.jpg"],
   ["Retro Bowl College", "/m/a2/semag/retrobowlcollege/", "https://raw.githubusercontent.com/sigmiliarity/a2/refs/heads/main/semag/retrobowlcollege/unnamed.png"],
   
   
-  ["Getaway Shooter (probably better)", "/m/a3/projects/getaway-shootout/", "https://raw.githubusercontent.com/sigmiliarity/a3/refs/heads/main/projects/getaway-shootout/img/images.jpg"],
+  ["Getaway Shooter", "/m/a3/projects/getaway-shootout/", "https://raw.githubusercontent.com/sigmiliarity/a3/refs/heads/main/projects/getaway-shootout/img/images.jpg"],
   
   ["Granny 3", "/m/web50/FinalBuild/", "https://raw.githubusercontent.com/sigmiliarity/webD/refs/heads/main/granny3.webp"],
   ["Friday Night Funkin' TOK", "/m/web51/24853/", "https://raw.githubusercontent.com/sigmiliarity/webD/refs/heads/main/tok.png"],
@@ -117,5 +115,13 @@
   [" nes", "/nes.html", "https://raw.githubusercontent.com/sigmiliarity/webD/refs/heads/main/nin.png"],
   ["Space Huggers", "/m/web59/", "https://github.com/sigmiliarity/web59/raw/refs/heads/main/favicon.ico"],
   ["Clover Pit", "/m/web61/", "https://raw.githubusercontent.com/sigmiliarity/webD/refs/heads/main/clover.png"],
-  ["QWOP", "/m/web62/?g=qwop.swf", "https://raw.githubusercontent.com/sigmiliarity/webD/refs/heads/main/qw.png"]
+  ["ROUNDS", "/m/web68/ROUNDS/", "https://raw.githubusercontent.com/sigmiliarity/webD/refs/heads/main/r.jpg"],
+  ["Gang Beasts", "/m/web64/", "https://raw.githubusercontent.com/sigmiliarity/webD/refs/heads/main/gb.jpg"],
+  ["Gamble With Your Friends", "/m/web63/game/", "https://raw.githubusercontent.com/sigmiliarity/web63/refs/heads/main/images/gameblewithurfriends.png"],
+  ["Ravenfield", "/m/web49/", "https://raw.githubusercontent.com/sigmiliarity/webD/refs/heads/main/raven.png"],
+  ["Rimworld", "/m/web67/rimworld/", "https://raw.githubusercontent.com/sigmiliarity/webD/refs/heads/main/rim.jpg"],
+  ["Balatro", "/m/web27/", "https://raw.githubusercontent.com/sigmiliarity/webD/refs/heads/main/balatro.png"],
+  ["Soundboard", "/m/web46/", "https://raw.githubusercontent.com/sigmiliarity/web46/refs/heads/main/button.png"],
+
+  ["Σ Chat", "/m/chat/", "https://placehold.co/320/137/white?text=Σ"]
 ]

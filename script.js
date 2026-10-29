@@ -11,8 +11,15 @@ async function loadCatalog() {
                 const response = await fetch(`/data/${key}.json`);
                 if (!response.ok) return [key, title, []];
                 const data = await response.json();
-                const sorted = data.sort((a, b) => a[0].localeCompare(b[0]));
-                return [key, title, sorted];
+                
+                // Deduplicate and sort using your snippet logic
+                const seen = new Set();
+                const processed = data.filter(x => {
+                    const k = x.t?.toLowerCase().replace(/[^a-z0-9]/g, "");
+                    return k && !seen.has(k) && seen.add(k);
+                }).sort((a, b) => a.t.localeCompare(b.t));
+                
+                return [key, title, processed];
             } catch {
                 return [key, title, []];
             }
