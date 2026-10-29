@@ -21,7 +21,12 @@ async function loadCatalog() {
                     seen.add(k);
                     
                     return true;
-                }).sort((a, b) => a[1].localeCompare(b[1]));
+                }).sort((a, b) => {
+                    return a[1].localeCompare(b[1], undefined, {
+                        numeric: true,
+                        sensitivity: 'accent'
+                    });
+                });
 
                 return [key, title, processed];
             } catch {
