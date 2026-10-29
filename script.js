@@ -12,12 +12,13 @@ async function loadCatalog() {
                 if (!response.ok) return [key, title, []];
                 const data = await response.json();
                 
-                // Deduplicate and sort using your snippet logic
                 const seen = new Set();
-                const processed = data.filter(x => {
-                    const k = x.t?.toLowerCase().replace(/[^a-z0-9]/g, "");
+                const processed = data.filter(item => {
+                    // Extract title from index 1 based on your format
+                    const titleVal = item[1]; 
+                    const k = titleVal?.toLowerCase().replace(/[^a-z0-9]/g, "");
                     return k && !seen.has(k) && seen.add(k);
-                }).sort((a, b) => a.t.localeCompare(b.t));
+                }).sort((a, b) => a[1].localeCompare(b[1])); // Sort by title at index 1
                 
                 return [key, title, processed];
             } catch {
@@ -25,7 +26,7 @@ async function loadCatalog() {
             }
         })
     );
-    return entries; // Returns map of [key, title, games[]]
+    return entries;
 }
 
 function loadUI(catalog) {
