@@ -14,19 +14,22 @@ async function loadCatalog() {
                 
                 const seen = new Set();
                 const processed = data.filter(item => {
-                    // Extract title from index 1 based on your format
-                    const titleVal = item[1]; 
-                    const k = titleVal?.toLowerCase().replace(/[^a-z0-9]/g, "");
-                    return k && !seen.has(k) && seen.add(k);
-                }).sort((a, b) => a[1].localeCompare(b[1])); // Sort by title at index 1
-                
+                    const rawTitle = item[1]; 
+                    const k = rawTitle?.toLowerCase().replace(/[^a-z0-9]/g, "");
+                    
+                    if (!k || seen.has(k)) return false;
+                    seen.add(k);
+                    
+                    return true;
+                }).sort((a, b) => a[1].localeCompare(b[1]));
+
                 return [key, title, processed];
             } catch {
                 return [key, title, []];
             }
         })
     );
-    return entries;
+    return entries; // Returns map of [key, title, games[]]
 }
 
 function loadUI(catalog) {
