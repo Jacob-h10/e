@@ -13,18 +13,19 @@ async function loadCatalog() {
                 const data = await response.json();
                 
                 const seen = new Set();
+
                 const processed = data.filter(item => {
-                    const rawTitle = item[1]; 
+                    const rawTitle = item[0];
                     const k = rawTitle?.toLowerCase().replace(/[^a-z0-9]/g, "");
-                    
+                
                     if (!k || seen.has(k)) return false;
                     seen.add(k);
-                    
+                
                     return true;
                 }).sort((a, b) => {
-                    return a[1].localeCompare(b[1], undefined, {
+                    return a[0].localeCompare(b[0], undefined, {
                         numeric: true,
-                        sensitivity: 'accent'
+                        sensitivity: 'base'
                     });
                 });
 
