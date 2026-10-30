@@ -4,30 +4,44 @@ const CATEGORIES = [
     { key: "archive", title: "Archive (Unsupported)" }
 ];
 
+const COLLATOR = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
+const CACHE_NAME = "jxl-catalog-cache-v1";
+
+async function getCachedAsset(url) {
+    const cache = await caches.open(CACHE_NAME);
+    let response = await cache.match(url);
+    if (!response) {
+        try {
+            response = await fetch(url);
+            if (response.ok) {
+                await cache.put(url, response.clone());
+            }
+        } catch {
+            return url;
+        }
+    }
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
+}
+
 async function loadCatalog() {
     const entries = await Promise.all(
         CATEGORIES.map(async ({ key, title }) => {
             try {
                 const response = await fetch(`/data/${key}.json`);
                 if (!response.ok) return [key, title, []];
-                const data = await response.json();
                 
+                const data = await response.json();
                 const seen = new Set();
 
-                const processed = data.filter(item => {
-                    const rawTitle = item[0];
-                    const k = rawTitle?.toLowerCase().replace(/[^a-z0-9]/g, "");
-                
-                    if (!k || seen.has(k)) return false;
-                    seen.add(k);
-                
-                    return true;
-                }).sort((a, b) => {
-                    return a[0].localeCompare(b[0], undefined, {
-                        numeric: true,
-                        sensitivity: 'base'
-                    });
-                });
+                const processed = data
+                    .filter(([rawTitle]) => {
+                        const k = rawTitle?.toLowerCase().replace(/[^a-z0-9]/g, "");
+                        if (!k || seen.has(k)) return false;
+                        seen.add(k);
+                        return true;
+                    })
+                    .sort((a, b) => COLLATOR.compare(a[0], b[0]));
 
                 return [key, title, processed];
             } catch {
@@ -35,14 +49,14 @@ async function loadCatalog() {
             }
         })
     );
-    return entries; // Returns map of [key, title, games[]]
+    return entries;
 }
 
 function loadUI(catalog) {
     const container = document.getElementById("container");
     const template = document.getElementById("game-template");
 
-    function render(filteredCatalog) {
+    async function render(filteredCatalog) {
         container.replaceChildren();
 
         for (const [key, title, games] of filteredCatalog) {
@@ -60,6 +74,7 @@ function loadUI(catalog) {
             grid.className = "section-grid";
 
             const fragment = document.createDocumentFragment();
+
             for (const [gameTitle, url, image] of games) {
                 const card = template.content.cloneNode(true);
                 const link = card.querySelector(".game-card");
@@ -67,11 +82,15 @@ function loadUI(catalog) {
                 link.title = gameTitle;
 
                 const img = card.querySelector(".game-card-image");
-                img.src = image;
                 img.alt = gameTitle;
+                img.loading = "lazy";
+                img.decoding = "async";
+
+                getCachedAsset(image).then(objectUrl => {
+                    img.src = objectUrl;
+                });
 
                 card.querySelector(".game-card-title").textContent = gameTitle;
-
                 fragment.append(card);
             }
 
@@ -90,12 +109,11 @@ function loadUI(catalog) {
                 return;
             }
 
-            const filtered = catalog.map(([key, title, games]) => {
-                const matched = games.filter(([gameTitle]) =>
-                    gameTitle.toLowerCase().includes(searchTerm)
-                );
-                return [key, title, matched];
-            });
+            const filtered = catalog.map(([key, title, games]) => [
+                key,
+                title,
+                games.filter(([gameTitle]) => gameTitle.toLowerCase().includes(searchTerm))
+            ]);
 
             render(filtered);
         }
@@ -123,8 +141,5 @@ function setupSearch(ui) {
 }
 
 const catalog = await loadCatalog();
-
-console.log(catalog);
-
 const ui = loadUI(catalog);
 setupSearch(ui);
